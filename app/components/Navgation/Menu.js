@@ -47,6 +47,12 @@ class SimpleMenu extends React.Component {
           <MenuItem button onClick={this.handleNavigate(`${routes.HOME}`)}>
             Home
           </MenuItem>
+          <MenuItem
+            button
+            onClick={this.handleNavigate(`${routes.LOGIN_PROFILES}`)}
+          >
+            Login Profiles
+          </MenuItem>
           <MenuItem button onClick={this.handleNavigate(`${routes.HELP}`)}>
             Help
           </MenuItem>

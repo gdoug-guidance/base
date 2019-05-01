@@ -12,12 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import Fade from '@material-ui/core/Fade';
 import { withStyles } from '@material-ui/core/styles';
 import { UserStruct } from '../../actions/types';
-import styles from './Login.css';
+import styles from './Welcome.css';
 import Style from './Style';
 
 type Props = {};
 
-class Login extends Component<Props> {
+class Welcome extends Component<Props> {
   props: Props;
 
   state = {
@@ -209,15 +209,15 @@ class Login extends Component<Props> {
   }
 }
 
-Login.defaultProps = {
+Welcome.defaultProps = {
   user: UserStruct,
   setUser: () => null
 };
 
-Login.propTypes = {
+Welcome.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object,
   setUser: PropTypes.func
 };
 
-export default withStyles(Style)(Login);
+export default withStyles(Style)(Welcome);

@@ -1,0 +1,8 @@
+{
+  "cognito": {
+    "region": "",
+    "userPool": "",
+    "identityPool": "",
+    "appClientId": ""
+  }
+}

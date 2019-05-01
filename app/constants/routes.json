@@ -1,6 +1,7 @@
 {
   "HOME": "/home",
-  "LOGIN": "/",
+  "WELCOME": "/",
   "SETTINGS": "/settings",
-  "HELP": "/help"
+  "HELP": "/help",
+  "LOGIN_PROFILES": "/loginProfiles"
 }

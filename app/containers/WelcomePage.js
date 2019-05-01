@@ -2,15 +2,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setUserAction } from '../actions/user';
-import Login from '../components/Login/Login';
+import Welcome from '../components/Welcome/Welcome';
 
 type Props = {};
 
-export class LoginPageContainer extends Component<Props> {
+export class WelcomePageContainer extends Component<Props> {
   props: Props;
 
   render() {
-    return <Login />;
+    return <Welcome />;
   }
 }
 
@@ -27,4 +27,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(Welcome);
