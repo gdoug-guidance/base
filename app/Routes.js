@@ -12,6 +12,8 @@ import HelpPage from './containers/HelpPage';
 import styles from './Routes.css';
 import BottomBar from './components/Navgation/BottomBar';
 import LoginProfilesPage from './containers/LoginProfilesPage';
+import LoginPage from './containers/LoginPage';
+import ApiPage from './containers/ApiPage';
 
 class Routes extends Component<Props> {
   render() {
@@ -25,6 +27,8 @@ class Routes extends Component<Props> {
             <Route path={routes.WELCOME} component={WelcomePage} exact />
             <Route path={routes.SETTINGS} component={SettingsPage} exact />
             <Route path={routes.HELP} component={HelpPage} exact />
+            <Route path={routes.LOGIN} component={LoginPage} exact />
+            <Route path={routes.API} component={ApiPage} exact />
             <Route
               path={routes.LOGIN_PROFILES}
               component={LoginProfilesPage}

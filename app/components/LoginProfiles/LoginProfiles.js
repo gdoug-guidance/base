@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify from 'aws-amplify';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -30,15 +30,7 @@ class LoginProfiles extends Component<Props> {
       appClientId: configurations.cognito.appClientId
     },
     settingsSaved: false,
-    userCredentials: {
-      username: '',
-      password: '',
-      code: ''
-    },
-    user: {},
-    systemMessage: '',
-    userRegistration: '',
-    loginStatus: false
+    systemMessage: ''
   };
 
   componentDidMount() {
@@ -49,8 +41,6 @@ class LoginProfiles extends Component<Props> {
     this.hydrateState();
     this.checkDeferredCommands();
   }
-
-  sessionCheck = false;
 
   amplifyConfigured = false;
 
@@ -95,17 +85,6 @@ class LoginProfiles extends Component<Props> {
       });
       this.amplifyConfigured = true;
     }
-    if (!this.sessionCheck) this.getSession();
-  };
-
-  getSession = async () => {
-    try {
-      const userSession = await Auth.currentSession();
-      this.setState({ user: userSession, loginStatus: true });
-    } catch (e) {
-      this.setState({ loginStatus: false });
-    }
-    this.sessionCheck = true;
   };
 
   handleCognitoChange = event => {
@@ -118,69 +97,12 @@ class LoginProfiles extends Component<Props> {
     this.setState({ settingsSaved: true });
   };
 
-  handleUserCredentialsChange = event => {
-    const { userCredentials } = this.state;
-    userCredentials[event.target.name] = event.target.value;
-    this.setState({ userCredentials });
-  };
-
-  handleUserRegister = async () => {
-    const { userCredentials } = this.state;
-    try {
-      await Auth.signUp(userCredentials);
-      this.setState({
-        userRegistration: 'submitted',
-        systemMessage:
-          'Sign Up Success. Please Check your email for confirmation code'
-      });
-    } catch (e) {
-      this.setState({ systemMessage: e.message });
-    }
-  };
-
-  handleUserConfirm = async () => {
-    const { userCredentials } = this.state;
-    try {
-      await Auth.confirmSignUp(userCredentials.username, userCredentials.code);
-      this.setState({
-        userRegistration: 'confirmed',
-        systemMessage: 'Sweet! Great work. Now you can log in.'
-      });
-    } catch (e) {
-      this.setState({ systemMessage: e.message });
-    }
-  };
-
-  handleUserLogin = async () => {
-    const { userCredentials } = this.state;
-    try {
-      await Auth.signIn(userCredentials.username, userCredentials.password);
-      this.sessionCheck = false;
-      this.setState({ systemMessage: 'Successfully Logged In' });
-    } catch (e) {
-      this.setState({ systemMessage: e.message });
-    }
-  };
-
-  handleUserLogout = async () => {
-    await Auth.signOut();
-    this.sessionCheck = false;
-    this.setState({ systemMessage: 'Logged Out.' });
-  };
-
   handleErrorDismiss = () => {
     this.setState({ systemMessage: '' });
   };
 
   render() {
-    const {
-      auth,
-      userCredentials,
-      user,
-      systemMessage,
-      userRegistration,
-      loginStatus
-    } = this.state;
+    const { auth, systemMessage } = this.state;
 
     return (
       <div>
@@ -240,126 +162,6 @@ class LoginProfiles extends Component<Props> {
                   </Button>
                 </CardActions>
               </Card>
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-          <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>User Sign up</Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              {userRegistration === 'submitted' ? (
-                <Card>
-                  <CardHeader title="Confirm Code" />
-                  <CardContent>
-                    <TextField
-                      id="code"
-                      key="code"
-                      name="code"
-                      label="Confirmation Code"
-                      onChange={this.handleUserCredentialsChange}
-                      value={userCredentials.code}
-                      fullWidth
-                    />
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleUserConfirm}
-                    >
-                      Confirm
-                    </Button>
-                  </CardActions>
-                </Card>
-              ) : (
-                <Card>
-                  <CardHeader title="User Registration" />
-                  <CardContent>
-                    <TextField
-                      id="email"
-                      key="email"
-                      name="username"
-                      label="User Email"
-                      onChange={this.handleUserCredentialsChange}
-                      value={userCredentials.username}
-                      fullWidth
-                    />
-                    <TextField
-                      id="password"
-                      key="password"
-                      name="password"
-                      type="password"
-                      label="User Password"
-                      onChange={this.handleUserCredentialsChange}
-                      value={userCredentials.password}
-                      fullWidth
-                    />
-                    <div>{JSON.stringify(user)}</div>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleUserRegister}
-                    >
-                      Create User
-                    </Button>
-                  </CardActions>
-                </Card>
-              )}
-            </ExpansionPanelDetails>
-          </ExpansionPanel>
-          <ExpansionPanel>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography>User Login</Typography>
-            </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
-              {loginStatus ? (
-                <div>
-                  <pre>{JSON.stringify(user, null, 2)}</pre>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={this.handleUserLogout}
-                  >
-                    Logout
-                  </Button>
-                </div>
-              ) : (
-                <Card>
-                  <CardHeader title="User Login" />
-                  <CardContent>
-                    <TextField
-                      id="email"
-                      key="email"
-                      name="username"
-                      label="User Email"
-                      onChange={this.handleUserCredentialsChange}
-                      value={userCredentials.username}
-                      fullWidth
-                    />
-                    <TextField
-                      id="password"
-                      key="password"
-                      name="password"
-                      type="password"
-                      label="User Password"
-                      onChange={this.handleUserCredentialsChange}
-                      value={userCredentials.password}
-                      fullWidth
-                    />
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleUserLogin}
-                    >
-                      Login
-                    </Button>
-                  </CardActions>
-                </Card>
-              )}
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <Dialog open={Boolean(systemMessage)}>

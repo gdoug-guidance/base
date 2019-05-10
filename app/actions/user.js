@@ -1,6 +1,11 @@
 // @flow
 import uuidv4 from 'uuid/v4';
-import { SET_USER, LOAD_USER_FROM_DISK, SAVE_USER_NOTES } from './types';
+import {
+  SET_USER,
+  LOAD_USER_FROM_DISK,
+  SAVE_USER_NOTES,
+  SET_USER_TOKEN
+} from './types';
 
 export const setUserAction = name => ({
   type: SET_USER,
@@ -8,6 +13,11 @@ export const setUserAction = name => ({
     id: uuidv4(),
     name
   }
+});
+
+export const setUserTokenAction = token => ({
+  type: SET_USER_TOKEN,
+  payload: token
 });
 
 export const loadUserFromDiskAction = user => ({

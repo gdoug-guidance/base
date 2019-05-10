@@ -3,5 +3,7 @@
   "WELCOME": "/",
   "SETTINGS": "/settings",
   "HELP": "/help",
-  "LOGIN_PROFILES": "/loginProfiles"
+  "LOGIN_PROFILES": "/loginProfiles",
+  "LOGIN": "/login",
+  "API": "/api"
 }

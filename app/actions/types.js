@@ -1,5 +1,6 @@
 // User Actions
 export const SET_USER = 'SET_USER';
+export const SET_USER_TOKEN = 'SET_USER_TOKEN';
 export const LOAD_USER_FROM_DISK = 'LOAD_USER_FROM_DISK';
 export const SAVE_USER_NOTES = 'SAVE_USER_NOTES';
 
@@ -19,7 +20,8 @@ export const UserStruct = {
   schemaVersion: '1.0.0',
   id: '',
   name: '',
-  notes: ''
+  notes: '',
+  token: ''
 };
 
 export const BackupProfileStruct = {
