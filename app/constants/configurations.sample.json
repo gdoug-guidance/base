@@ -4,5 +4,8 @@
     "userPool": "",
     "identityPool": "",
     "appClientId": ""
+  },
+  "api": {
+    "endpoint": "http://localhost:8000"
   }
 }

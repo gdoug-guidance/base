@@ -14,6 +14,7 @@ import DialogActions from '@material-ui/core/es/DialogActions/DialogActions';
 import CardActions from '@material-ui/core/es/CardActions/CardActions';
 import Dialog from '@material-ui/core/es/Dialog/Dialog';
 import DialogContent from '@material-ui/core/es/DialogContent/DialogContent';
+import configurations from '../../constants/configurations';
 
 type Props = {};
 
@@ -64,7 +65,7 @@ class Api extends Component<Props> {
       systemMessage: 'Contacting the API... ',
       publicResponse: ''
     });
-    fetch('http://project.guidance.local:8000/hello')
+    fetch(`${configurations.api.endpoint}/hello`)
       .then(res => res.json())
       .then(
         result => this.setState({ publicResponse: result, systemMessage: '' }),
@@ -82,7 +83,7 @@ class Api extends Component<Props> {
       systemMessage: 'Contacting the API... ',
       privateResponse: ''
     });
-    fetch('http://project.guidance.local:8000/private')
+    fetch(`${configurations.api.endpoint}/private`)
       .then(res => res.json())
       .then(
         result => this.setState({ privateResponse: result, systemMessage: '' }),
@@ -101,7 +102,7 @@ class Api extends Component<Props> {
       systemMessage: 'Contacting the API... ',
       privateResponse: ''
     });
-    fetch('http://project.guidance.local:8000/private', {
+    fetch(`${configurations.api.endpoint}/private`, {
       headers: {
         Authorization: `Bearer ${user.token}`
       }
