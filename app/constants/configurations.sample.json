@@ -3,9 +3,13 @@
     "region": "",
     "userPool": "",
     "identityPool": "",
-    "appClientId": ""
+    "appClientId": "",
+    "appClientSecret": ""
   },
   "api": {
     "endpoint": "http://localhost:8000"
+  },
+  "magento": {
+    "endpoint": "http://localhost:8081"
   }
 }

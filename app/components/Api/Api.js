@@ -26,7 +26,8 @@ class Api extends Component<Props> {
   state = {
     systemMessage: '',
     publicResponse: '',
-    privateResponse: ''
+    privateResponse: '',
+    magentoResponse: ''
   };
 
   componentDidMount() {
@@ -119,12 +120,40 @@ class Api extends Component<Props> {
       );
   };
 
+  handleMagentoCallWithToken = () => {
+    const { user } = this.props;
+    this.setState({
+      systemMessage: 'Contacting Magento API... ',
+      magentoResponse: ''
+    });
+    fetch(`${configurations.magento.endpoint}/rest/V1/customers/me`, {
+      headers: {
+        AccessToken: user.token
+      }
+    })
+      .then(res => res.json())
+      .then(
+        result => this.setState({ magentoResponse: result, systemMessage: '' }),
+        error => {
+          this.setState({ magentoResponse: error, systemMessage: '' });
+        }
+      )
+      .catch(error =>
+        this.setState({ magentoResponse: error, systemMessage: '' })
+      );
+  };
+
   handleErrorDismiss = () => {
     this.setState({ systemMessage: '' });
   };
 
   render() {
-    const { systemMessage, publicResponse, privateResponse } = this.state;
+    const {
+      systemMessage,
+      publicResponse,
+      privateResponse,
+      magentoResponse
+    } = this.state;
 
     return (
       <div>
@@ -175,6 +204,28 @@ class Api extends Component<Props> {
                     onClick={this.handlePrivateCallWithoutToken}
                   >
                     Make Call w/out Token
+                  </Button>
+                </CardActions>
+              </Card>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+          <ExpansionPanel>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Magento Endpoint</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Card>
+                <CardHeader title="Call Magento Endpoint" />
+                <CardContent>
+                  <pre>{JSON.stringify(magentoResponse, null, 2)}</pre>
+                </CardContent>
+                <CardActions>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={this.handleMagentoCallWithToken}
+                  >
+                    Make Call w/ Token
                   </Button>
                 </CardActions>
               </Card>
